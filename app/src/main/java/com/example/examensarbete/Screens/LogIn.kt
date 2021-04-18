@@ -6,12 +6,35 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import com.example.examensarbete.Firebase.CreateUser
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.example.examensarbete.R
+import com.google.firebase.FirebaseApp
+import com.google.firebase.firestore.FirebaseFirestore
 
 class LogIn : AppCompatActivity() {
+
+
+    private lateinit var auth: FirebaseAuth
+    lateinit var db: FirebaseFirestore
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_log_in)
+
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
+
+        val currentUser: FirebaseUser? = auth.currentUser
+
+        if (currentUser != null) {
+            toMainActivity()
+            println("!!! User: ${currentUser}")
+        } else {
+            toMainActivity()
+            println("!!! No user")
+        }
 
 
         val emailInput = findViewById<TextView>(R.id.user_name_text)
@@ -30,6 +53,15 @@ class LogIn : AppCompatActivity() {
         }
     }
 
+    private fun toMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun toLogIn() {
+        val intent = Intent(this, LogIn::class.java)
+        startActivity(intent)
+    }
     private fun toSignUp() {
         val intent = Intent(this, SignUp::class.java)
         startActivity(intent)

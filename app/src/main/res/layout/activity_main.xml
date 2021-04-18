@@ -4,16 +4,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="#989696"
+    tools:context=".Screens.MainActivity">
 
+  <TextView
+      android:id="@+id/top_text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="50dp"
+      android:fontFamily="@font/acme"
+      android:text="True or False?"
+      android:textSize="36dp"
+      android:textColor="#000000"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="163dp"
-        android:text="Hello World"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+  <Button
+      android:id="@+id/play_button"
+      android:layout_width="221dp"
+      android:layout_height="63dp"
+      android:layout_marginBottom="50dp"
+      android:text="Play"
+      app:layout_constraintBottom_toTopOf="@+id/profile_text"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+
+  <TextView
+      android:id="@+id/howTo_text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="20dp"
+      android:fontFamily="@font/acme"
+      android:text="How to play?"
+      android:textColor="#000000"
+      android:textSize="20dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+
+  <ImageButton
+      android:id="@+id/imageButton"
+      android:layout_width="100dp"
+      android:layout_height="92dp"
+      android:layout_marginBottom="50dp"
+      app:layout_constraintBottom_toTopOf="@+id/howTo_text"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      tools:srcCompat="@tools:sample/avatars" />
+
+  <TextView
+      android:id="@+id/profile_text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="10dp"
+      android:fontFamily="@font/acme"
+      android:text="My profile"
+      android:textColor="#000000"
+      android:textSize="20dp"
+      app:layout_constraintBottom_toTopOf="@+id/imageButton"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
