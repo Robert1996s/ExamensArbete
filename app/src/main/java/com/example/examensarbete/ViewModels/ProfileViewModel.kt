@@ -17,13 +17,9 @@ class ProfileViewModel: ViewModel () {
 
     private val _userName = MutableLiveData<String>()
 
-
     fun setUserName(): LiveData<String> {
         return _userName
     }
-
-
-
 
     fun getUserInfo(uid: String) {
         println("!!! get info körs")
@@ -43,7 +39,6 @@ class ProfileViewModel: ViewModel () {
                     else {
                         println("!!! Get profile went wrong")
                     }
-
         }
 
     }

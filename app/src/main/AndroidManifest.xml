@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ExamensArbete.NoActionBar">
-        <activity android:name=".Screens.Categories"></activity>
+        <activity android:name=".Screens.GameActivity"></activity>
+        <activity android:name=".Screens.PlayerProfile" />
+        <activity android:name=".Screens.ForgotPassword" />
+        <activity android:name=".Screens.Categories" />
         <activity android:name=".Screens.SignUp" />
         <activity
             android:name=".Screens.LogIn"

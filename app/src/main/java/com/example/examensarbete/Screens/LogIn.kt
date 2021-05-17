@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import com.example.examensarbete.Firebase.CreateUser
+import com.example.examensarbete.Firebase.SignIn
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.example.examensarbete.R
@@ -23,6 +24,7 @@ class LogIn : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_log_in)
 
+
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
@@ -32,7 +34,6 @@ class LogIn : AppCompatActivity() {
             toMainActivity()
             println("!!! User: ${currentUser}")
         } else {
-            toMainActivity()
             println("!!! No user")
         }
 
@@ -41,16 +42,26 @@ class LogIn : AppCompatActivity() {
         val passwordInput = findViewById<TextView>(R.id.user_password_text)
         val logInButton = findViewById<Button>(R.id.singIn_button)
         val signUpText = findViewById<TextView>(R.id.signUp_text)
+        val forgotPassword = findViewById<TextView>(R.id.forgot_password)
 
         signUpText.setOnClickListener{
             toSignUp()
         }
 
         logInButton.setOnClickListener {
-            val userName = emailInput.text.toString()
+            val userEmail = emailInput.text.toString()
             val userPassword = passwordInput.text.toString()
-            CreateUser().userCreate(userName, userPassword)
+            SignIn().signInUser(userEmail, userPassword)
         }
+
+        forgotPassword.setOnClickListener {
+            toForgotPassword()
+        }
+    }
+
+    private fun toForgotPassword() {
+        val intent = Intent(this, ForgotPassword::class.java)
+        startActivity(intent)
     }
 
     private fun toMainActivity() {

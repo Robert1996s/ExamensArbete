@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#989696"
+    android:background="#f5f7b2"
     tools:context=".Screens.MainActivity">
 
   <TextView
-      android:id="@+id/top_text"
+      android:id="@+id/player_name_text"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginTop="50dp"
       android:fontFamily="@font/acme"
-      android:text="True or False?"
-      android:textSize="36dp"
-      android:textColor="#000000"
+      android:text="50/50"
+      android:textColor="#cf0000"
+      android:textSize="50dp"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
@@ -26,7 +26,7 @@
       android:layout_height="63dp"
       android:layout_marginBottom="50dp"
       android:text="Play"
-      app:layout_constraintBottom_toTopOf="@+id/profile_text"
+      app:layout_constraintBottom_toTopOf="@+id/howTo_text"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent" />
 
@@ -37,32 +37,56 @@
       android:layout_marginBottom="20dp"
       android:fontFamily="@font/acme"
       android:text="How to play?"
-      android:textColor="#000000"
+      android:textColor="#890596"
       android:textSize="20dp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent" />
 
-  <ImageButton
-      android:id="@+id/imageButton"
-      android:layout_width="100dp"
-      android:layout_height="92dp"
-      android:layout_marginBottom="50dp"
-      app:layout_constraintBottom_toTopOf="@+id/howTo_text"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      tools:srcCompat="@tools:sample/avatars" />
-
   <TextView
       android:id="@+id/profile_text"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginBottom="10dp"
       android:fontFamily="@font/acme"
       android:text="My profile"
       android:textColor="#000000"
       android:textSize="20dp"
-      app:layout_constraintBottom_toTopOf="@+id/imageButton"
+      app:layout_constraintBottom_toTopOf="@+id/profile_button"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent" />
+
+  <TextView
+      android:id="@+id/the_text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/acme"
+      android:text="The"
+      android:textColor="#000000"
+      android:textSize="24dp"
+      app:layout_constraintBottom_toTopOf="@+id/player_name_text"
+      app:layout_constraintEnd_toEndOf="@+id/player_name_text"
+      app:layout_constraintStart_toStartOf="@+id/player_name_text" />
+
+  <TextView
+      android:id="@+id/game_text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/acme"
+      android:text="Game"
+      android:textColor="#000000"
+      android:textSize="24dp"
+      app:layout_constraintEnd_toEndOf="@+id/player_name_text"
+      app:layout_constraintStart_toStartOf="@+id/player_name_text"
+      app:layout_constraintTop_toBottomOf="@+id/player_name_text" />
+
+  <ImageView
+      android:id="@+id/profile_button"
+      android:layout_width="122dp"
+      android:layout_height="112dp"
+      app:layout_constraintBottom_toTopOf="@+id/play_button"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.501"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/game_text"
+      app:srcCompat="@drawable/user" />
 </androidx.constraintlayout.widget.ConstraintLayout>
