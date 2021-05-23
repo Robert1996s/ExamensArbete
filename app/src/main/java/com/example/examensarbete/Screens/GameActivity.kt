@@ -27,6 +27,7 @@ class GameActivity : AppCompatActivity() {
     private var objQuestionList = mutableListOf<Question>()
     private var questionIndex = 0
     private var gameCompleted = false
+    private var catToSave = ""
 
     private var test = MutableLiveData<MutableList<Question>>()
 
@@ -45,6 +46,8 @@ class GameActivity : AppCompatActivity() {
         //Setting the category text to the chosen one from the previous activity
         val userCat = intent.getStringExtra("category").toString()
         categoryText.text = userCat
+
+        catToSave = userCat
 
         //TODO göra om poäng här iställer för model
 
@@ -134,10 +137,10 @@ class GameActivity : AppCompatActivity() {
     private fun gameCompleted () {
         if (questionIndex == 7) {
                 Thread(Runnable {
-                    AddCompletedGame().addFinishedGame(playerScore, "category")
+                    AddCompletedGame().addFinishedGame(playerScore, catToSave)
                     println("!!! thread ran")
                 }).start()
-                navigateHome()
+                navigateHome() // Navigate to well played screen, tap it to navigate to main? better ui
                 println("!!! GAME COMPLETED")
         }
     }
