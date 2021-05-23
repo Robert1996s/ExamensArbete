@@ -1,8 +1,10 @@
 package com.example.examensarbete.Screens
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Base64
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -12,13 +14,12 @@ import com.example.examensarbete.Adapters.GameAdapter
 import com.example.examensarbete.Cache.LruCache
 import com.example.examensarbete.DataClasses.CurrentGame
 import com.example.examensarbete.Encryption.DataEncryption
-import com.example.examensarbete.Firebase.GetUserGames
 import com.example.examensarbete.GlobalVariables.UserGamesList
+import com.example.examensarbete.NetWork.NetworkHandler
 import com.example.examensarbete.R
 import com.example.examensarbete.ViewModels.ProfileViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.auth.User
 
 
 class PlayerProfile : AppCompatActivity() {
@@ -27,6 +28,7 @@ class PlayerProfile : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private var userUid = ""
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player_profile)
@@ -42,6 +44,12 @@ class PlayerProfile : AppCompatActivity() {
         val signOutBtn = findViewById<Button>(R.id.logOut_button)
         val switch = findViewById<Switch>(R.id.switchList)
         val recentText = findViewById<TextView>(R.id.recent_game_text)
+        val editProfileBtn = findViewById<ImageButton>(R.id.edit_profile)
+
+
+        editProfileBtn.setOnClickListener {
+            //TODO EDIT PROFILE FUNCTION
+        }
 
         switch.setOnCheckedChangeListener({ _ , isChecked ->
             val message = if (isChecked) "Sorted alphabetical" else "Sorted by Score"
@@ -66,13 +74,21 @@ class PlayerProfile : AppCompatActivity() {
             userUid = currentUser.uid
         }
 
+        println("!!! UID: $userUid")
+
+        if (NetworkHandler.isOnline(this)) {
+            getCache()
+        } else {
+            getCache()
+        }
 
         val userProfileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
         userProfileViewModel.getUserInfo(userUid)
+
         userProfileViewModel.setUserName().observe(this, Observer {
             userName.text = it.toString()
-            println("!!! new value: ${it}")
+            println("!!! new value username: ${it}")
         })
 
         userProfileViewModel.getGames(userUid)
@@ -85,16 +101,7 @@ class PlayerProfile : AppCompatActivity() {
             userGames = it
             //bubbleSort(UserGamesList.globalUserGames)
             adapter.notifyDataSetChanged()
-            println("!!!userGames $userGames")
-            println("!!!it $it")
         })
-
-
-
-        //recyclerView.adapter.registerAdapterDataObserver()
-        //recyclerView.adapter.registerAdapterDataObserver(RecyclerView.AdapterDataObserver)
-
-
 
         val message = "secret message"
 
@@ -182,5 +189,12 @@ class PlayerProfile : AppCompatActivity() {
             }
         }
         return games
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun getCache() {
+        val cache = LruCache<String, String>(8)
+        val hej = cache.get("0")
+        println("HEJ : $hej")
     }
 }

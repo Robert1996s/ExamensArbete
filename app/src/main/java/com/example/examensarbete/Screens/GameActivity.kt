@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.examensarbete.DataClasses.Question
+import com.example.examensarbete.Firebase.AddCompletedGame
 import com.example.examensarbete.GlobalVariables.CurrentQuestions
 import com.example.examensarbete.R
 import com.example.examensarbete.ViewModels.GameViewModel
@@ -19,13 +20,13 @@ class GameActivity : AppCompatActivity() {
 
     private val playerTrueAnswer = 0
     private val playerFalseAnswer = 1
-    private var questionCount = 0
     private var playerScore = 0
     private var correctAnswers = mutableListOf<Int>()
     lateinit var viewModel:GameViewModel
     private var questionList = mutableListOf<String?>()
     private var objQuestionList = mutableListOf<Question>()
     private var questionIndex = 0
+    private var gameCompleted = false
 
     private var test = MutableLiveData<MutableList<Question>>()
 
@@ -39,6 +40,7 @@ class GameActivity : AppCompatActivity() {
         val trueAnswer = findViewById<Button>(R.id.true_button)
         val falseAnswer = findViewById<Button>(R.id.false_button)
         val exitBtn = findViewById<Button>(R.id.exit_game_button)
+        val playScore = findViewById<TextView>(R.id.player_score)
 
         //Setting the category text to the chosen one from the previous activity
         val userCat = intent.getStringExtra("category").toString()
@@ -50,15 +52,10 @@ class GameActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
         viewModel.getQuestions(userCat)
         viewModel.getObjQuestionList()
-
-
-        /*Thread(Runnable {
-            Thread.sleep(500)
-            correctAnswers = viewModel.correctAnswers
-            //questionList = viewModel.questionTextList
-            println("!!! GAME ANSWERS : $correctAnswers")
-        }).start() */
-
+        viewModel.setScore()
+        /*viewModel.getPlayerScore().observe(this, Observer {
+            playScore.text = it.toString()
+        }) */
 
 
         fun setInList(list: List<Question>) {
@@ -81,9 +78,7 @@ class GameActivity : AppCompatActivity() {
         exitBtn.setBackgroundColor(Color.parseColor("#cf0000"))
 
         trueAnswer.setOnClickListener {
-            checkAnswer(playerTrueAnswer)
-            questionText.text = objQuestionList[questionIndex].text
-            println("!!!count: $questionCount")
+                checkAnswer(playerTrueAnswer)
         }
 
         falseAnswer.setOnClickListener {
@@ -101,7 +96,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun checkAnswer(answer: Int) {
-        val correct = 0 //Correct question answer
+        var correct = objQuestionList[questionIndex].correct_answer
         if (answer == correct) {
             increaseScore()
             loadNextQuestion()
@@ -113,14 +108,37 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun increaseScore () {
+        playerScore++
         val playerScoreText = findViewById<TextView>(R.id.player_score)
         playerScoreText.text = viewModel.player_score.toString()
         viewModel.addScore()
     }
 
     private fun loadNextQuestion () {
+        gameCompleted()
         questionIndex++
-        println("!!!count: $questionCount")
+        updateUi()
         println("!!! Next Question")
+    }
+
+    private fun updateUi() {
+        val scoreText = findViewById<TextView>(R.id.player_score)
+        var score = 0
+        score = playerScore
+        scoreText.text = score.toString()
+
+        val questionText = findViewById<TextView>(R.id.question_text)
+        questionText.text = objQuestionList[questionIndex].text
+    }
+
+    private fun gameCompleted () {
+        if (questionIndex == 7) {
+                Thread(Runnable {
+                    AddCompletedGame().addFinishedGame(playerScore, "category")
+                    println("!!! thread ran")
+                }).start()
+                navigateHome()
+                println("!!! GAME COMPLETED")
+        }
     }
 }

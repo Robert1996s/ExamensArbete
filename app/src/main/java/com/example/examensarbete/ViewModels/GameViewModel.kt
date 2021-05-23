@@ -14,7 +14,7 @@ class GameViewModel: ViewModel() {
 
     var player_score = 0
 
-    var questionIndex = 0
+    private val _playerScore = MutableLiveData<Int>()
 
     var objList = ArrayList<Question>()
 
@@ -25,6 +25,14 @@ class GameViewModel: ViewModel() {
 
     fun addScore(){
         player_score++
+    }
+
+    fun setScore() {
+        _playerScore.value = player_score
+    }
+
+    fun getPlayerScore(): MutableLiveData<Int> {
+        return _playerScore
     }
 
     fun setQuestionList(list: MutableList<Question>) {

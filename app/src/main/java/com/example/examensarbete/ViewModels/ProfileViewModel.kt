@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.examensarbete.DataClasses.CurrentGame
 import com.example.examensarbete.DataClasses.UserData
 import com.example.examensarbete.GlobalVariables.UserGamesList
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -45,7 +46,6 @@ class ProfileViewModel: ViewModel () {
                     if (task.isSuccessful) {
                         val document = task.result
                         if (document!!.exists()) {
-                            println("!!! Firebase User: ${document.data}")
                             val userData = document.toObject(UserData::class.java)!!
                             _userName.value = userData.user_name
 
@@ -60,7 +60,8 @@ class ProfileViewModel: ViewModel () {
 
     fun getGames(uid: String) {
 
-
+        val mapper = jacksonObjectMapper()
+        var jsonString = ""
 
         db = FirebaseFirestore.getInstance()
         var cacheKey = 0
@@ -72,10 +73,12 @@ class ProfileViewModel: ViewModel () {
                     val game = document.toObject(CurrentGame::class.java)
                     if (game != null) {
                         setGameList(game)
-                        cache.put(cacheKey.toString(), game)
+
+                        //Caching
+                        jsonString = mapper.writeValueAsString(game)
+                        cache.put(cacheKey.toString(), jsonString)
                         cache.dump()
                         cacheKey++
-                        println("!!!cacheKey : $cacheKey")
                         UserGamesList.globalUserGames.add(game)
                         println("!!!List: ${UserGamesList.globalUserGames[0]}")
                     }

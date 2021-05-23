@@ -6,18 +6,15 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
-import com.example.examensarbete.Cache.LruCache
-import com.example.examensarbete.DataClasses.CurrentGame
-import com.example.examensarbete.Firebase.GetUserGames
 import com.example.examensarbete.NetWork.NetworkHandler
 import com.example.examensarbete.R
 
 class MainActivity : AppCompatActivity() {
+
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         val playBtn = findViewById<Button>(R.id.play_button)
         val profileBtn = findViewById<ImageView>(R.id.profile_button)
         val howToPlayText = findViewById<TextView>(R.id.howTo_text)
+
 
         //Shows the infopage about the game
         val buttonClicked = {dialog: DialogInterface, which: Int ->
@@ -40,14 +38,15 @@ class MainActivity : AppCompatActivity() {
 
         //Network check from NetworkHandler
         if (NetworkHandler.isOnline(this)) {
+            //Cache the data
             println("!!! We Have internet")
         } else {
+            //Get the cached data
             println("!!! NO INTERNET")
         }
 
         //val testObj = CurrentGame("testObj", 10, "Test", true)
         //val testObj2 = CurrentGame("testObj", 2, "Test", true)
-
 
 
         playBtn.setOnClickListener {
@@ -60,7 +59,6 @@ class MainActivity : AppCompatActivity() {
             alertText.show()
         }
     }
-
 
     //Navigation to Profile
     private fun goToProfile() {

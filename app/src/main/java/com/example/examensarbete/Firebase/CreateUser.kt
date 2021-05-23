@@ -24,7 +24,7 @@ class CreateUser {
         println("!!!name and password ${name + email}")
     }
 
-    private fun saveUserData(email: String, name: String) {
+    private fun saveUserData(name: String, email: String) {
         val user = auth.currentUser
         val userUid = user!!.uid
         val data = UserData(name, email)
