@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Button
 import com.example.examensarbete.DataClasses.Category
 import com.example.examensarbete.Firebase.GetCategories
+import com.example.examensarbete.Firebase.GetQuestions
 import com.example.examensarbete.R
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
@@ -16,6 +17,7 @@ class Categories : AppCompatActivity() {
     private var categoryList = mutableListOf<String>()
     private var categoryUidList = mutableListOf<String>()
     lateinit var db: FirebaseFirestore
+    private var chosenCat = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_categories)
@@ -45,20 +47,30 @@ class Categories : AppCompatActivity() {
 
 
         category1.setOnClickListener {
+            chosenCat = listCat[0]
+            val catUid = categoryUidList[0]
+            println("!!! category chosen: $chosenCat")
+            GetQuestions().getQuestions(chosenCat)
             startGame()
         }
 
         category2.setOnClickListener {
+            chosenCat = listCat[1]
+            val catUid = categoryUidList[1]
+            println("!!! category chosen: $chosenCat")
+            GetQuestions().getQuestions(chosenCat)
             startGame()
         }
         category3.setOnClickListener {
+            chosenCat = listCat[2]
+            val catUid = categoryUidList[2]
+            println("!!! category chosen: $chosenCat")
+            GetQuestions().getQuestions(chosenCat)
             startGame()
         }
-
         category1.text = listCat[0]
         category2.text = listCat[1]
         category3.text = listCat[2]
-
     }
 
     private fun goBack() {
@@ -85,6 +97,7 @@ class Categories : AppCompatActivity() {
 
     private fun toGameScreen() {
         val intent = Intent(this, GameActivity::class.java)
+        intent.putExtra("category", chosenCat)
         startActivity(intent)
     }
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.examensarbete.DataClasses.CurrentGame
+import com.example.examensarbete.GlobalVariables.UserGamesList
 import com.example.examensarbete.R
 
 class GameAdapter (
@@ -25,12 +26,11 @@ class GameAdapter (
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val game = games[position]
 
+
         val score = game.score
         val category = game.category
-
         holder.categoryText.text = category
         holder.playerScore.text = score.toString()
-
     }
 
     inner class ViewHolder(gameView: View) : RecyclerView.ViewHolder(gameView) {

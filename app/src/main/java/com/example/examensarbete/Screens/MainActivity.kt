@@ -11,6 +11,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import com.example.examensarbete.Cache.LruCache
+import com.example.examensarbete.DataClasses.CurrentGame
+import com.example.examensarbete.Firebase.GetUserGames
 import com.example.examensarbete.NetWork.NetworkHandler
 import com.example.examensarbete.R
 
@@ -41,6 +44,10 @@ class MainActivity : AppCompatActivity() {
         } else {
             println("!!! NO INTERNET")
         }
+
+        //val testObj = CurrentGame("testObj", 10, "Test", true)
+        //val testObj2 = CurrentGame("testObj", 2, "Test", true)
+
 
 
         playBtn.setOnClickListener {

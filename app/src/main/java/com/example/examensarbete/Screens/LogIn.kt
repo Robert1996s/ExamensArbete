@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import com.example.examensarbete.Firebase.CreateUser
+import com.example.examensarbete.Firebase.GetUserGames
 import com.example.examensarbete.Firebase.SignIn
+import com.example.examensarbete.GlobalVariables.UserGamesList
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.example.examensarbete.R
@@ -18,6 +20,7 @@ class LogIn : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     lateinit var db: FirebaseFirestore
+    private var userUid = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

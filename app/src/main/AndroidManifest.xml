@@ -9,7 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ExamensArbete.NoActionBar">
-        <activity android:name=".Screens.GameActivity"></activity>
+        <activity
+            android:name=".Screens.SplashScreen"
+            android:noHistory="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+        <activity android:name=".Screens.GameActivity" />
         <activity android:name=".Screens.PlayerProfile" />
         <activity android:name=".Screens.ForgotPassword" />
         <activity android:name=".Screens.Categories" />
