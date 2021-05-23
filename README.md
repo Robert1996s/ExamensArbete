@@ -2,7 +2,7 @@
 
 GameViewModel = LiveData, observar i GameActicity
 
-ProfileViewModel = LiveData, observar i PlayerProfile
+ProfileViewModel = LiveData, observar i PlayerProfile, cachar data
 
 PlayerProfile = RecycleView, adapter, bubble sort för string och int.
 
