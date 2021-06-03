@@ -18,15 +18,16 @@ import com.example.examensarbete.GlobalVariables.UserGamesList
 import com.example.examensarbete.NetWork.NetworkHandler
 import com.example.examensarbete.R
 import com.example.examensarbete.ViewModels.ProfileViewModel
+import com.example.examensarbete.ViewModels.ViewModelFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-
 
 class PlayerProfile : AppCompatActivity() {
 
     private var userGames = mutableListOf<CurrentGame>()
     private lateinit var auth: FirebaseAuth
     private var userUid = ""
+    private lateinit var viewModel: ProfileViewModel
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,23 +47,46 @@ class PlayerProfile : AppCompatActivity() {
         val recentText = findViewById<TextView>(R.id.recent_game_text)
         val editProfileBtn = findViewById<ImageButton>(R.id.edit_profile)
 
+        //val userProfileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
+
+
+        //val myWordViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application)).get(ProfileViewModel::class.java)
+
+
+        //viewModel = ViewModelProvider.of(this, ViewModelFactory(this@PlayerProfile))
+                //.get(ProfileViewModel::class.java)
+
+
+        //kan inte importera .of
+        //Sista biten i en fungerande cache, sedan ska det fungera...
+        //https://stackoverflow.com/questions/64834877/androidviewmodel-has-no-zero-argument-constructor-how-to-solve-this
+        //https://stackoverflow.com/questions/44194579/android-viewmodel-has-no-zero-argument-constructor
+
+
+        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
+
+
+
+
+
+        val cache = LruCache<String, String>(8)
 
         editProfileBtn.setOnClickListener {
             //TODO EDIT PROFILE FUNCTION
         }
+
 
         switch.setOnCheckedChangeListener({ _ , isChecked ->
             val message = if (isChecked) "Sorted alphabetical" else "Sorted by Score"
             Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 
             if (isChecked) {
-                bubbleSort(UserGamesList.globalUserGames)
+                UserGamesList.globalUserGames = bubbleSort(UserGamesList.globalUserGames)
                 adapter.notifyDataSetChanged()
             } else {
-                sortScore(UserGamesList.globalUserGames)
+                UserGamesList.globalUserGames = sortScore(UserGamesList.globalUserGames)
                 adapter.notifyDataSetChanged()
             }
-
         })
 
         signOutBtn.setOnClickListener {
@@ -77,31 +101,34 @@ class PlayerProfile : AppCompatActivity() {
         println("!!! UID: $userUid")
 
         if (NetworkHandler.isOnline(this)) {
-            getCache()
+            //userProfileViewModel.getGames(userUid)
+            viewModel.getCache()
+
+            adapter.notifyDataSetChanged()
         } else {
-            getCache()
+            viewModel.setUpCache()
+            adapter.notifyDataSetChanged()
         }
 
-        val userProfileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
+        //userProfileViewModel.getUserInfo(userUid)
 
-        userProfileViewModel.getUserInfo(userUid)
+        viewModel.getUserInfo(userUid)
 
-        userProfileViewModel.setUserName().observe(this, Observer {
+        /*userProfileViewModel.setUserName().observe(this, Observer {
             userName.text = it.toString()
             println("!!! new value username: ${it}")
         })
 
-        userProfileViewModel.getGames(userUid)
-
-        adapter.notifyDataSetChanged()
-
+        
         UserGamesList.globalUserGames.clear()
 
         userProfileViewModel.getGameList().observe(this, Observer {
             userGames = it
+            println("!!! userGames : $userGames" +
+                    "")
             //bubbleSort(UserGamesList.globalUserGames)
             adapter.notifyDataSetChanged()
-        })
+        }) */
 
         val message = "secret message"
 
@@ -195,6 +222,6 @@ class PlayerProfile : AppCompatActivity() {
     private fun getCache() {
         val cache = LruCache<String, String>(8)
         val hej = cache.get("0")
-        println("HEJ : $hej")
+        println("!!!cache data : $hej")
     }
 }

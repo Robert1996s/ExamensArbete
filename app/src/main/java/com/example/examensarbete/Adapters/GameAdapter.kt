@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.examensarbete.DataClasses.CurrentGame
 import com.example.examensarbete.GlobalVariables.UserGamesList
@@ -38,5 +39,12 @@ class GameAdapter (
         val playerScore: TextView = gameView.findViewById(R.id.player_points)
     }
 
+    class GameComparator : DiffUtil.ItemCallback<CurrentGame>(){
+        override fun areItemsTheSame(oldItem: CurrentGame, newItem: CurrentGame) =
+                oldItem.score == newItem.score
+
+        override fun areContentsTheSame(oldItem: CurrentGame, newItem: CurrentGame) =
+                oldItem == newItem
+    }
 }
 

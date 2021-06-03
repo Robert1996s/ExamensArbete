@@ -8,6 +8,18 @@
     tools:context=".Screens.GameActivity">
 
     <TextView
+        android:id="@+id/player_score2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/alfa_slab_one"
+        android:text="/8"
+        android:textColor="#000000"
+        android:textSize="32dp"
+        app:layout_constraintStart_toEndOf="@+id/player_score"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/points_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

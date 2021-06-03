@@ -2,6 +2,7 @@ package com.example.examensarbete.Screens
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.widget.Button
 import android.widget.TextView
 import com.example.examensarbete.Firebase.CreateUser
@@ -29,10 +30,19 @@ class SignUp : AppCompatActivity() {
             val thread = Thread(Runnable {
                 println("!!!Creating user")
                 CreateUser().userCreate(userEmail, userPassword, userName)
+                checkEmailValidation(userEmail)
             })
             thread.start()
+        }
 
-
+    }
+     fun checkEmailValidation(email: String): Boolean {
+        if (email == "") {
+            return false
+            println("!!!email NOT good")
+        } else {
+            println("!!!email good")
+            return true
         }
 
     }

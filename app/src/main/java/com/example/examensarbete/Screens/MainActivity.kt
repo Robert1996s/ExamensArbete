@@ -33,17 +33,9 @@ class MainActivity : AppCompatActivity() {
         //Alert that shows the how to play text
         val alertText = AlertDialog.Builder(this)
         alertText.setTitle("How to Play?")
-        alertText.setMessage("This is how you play the 50/50 game.")
+        alertText.setMessage("This is how you play the 50/50 game. " +
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
         alertText.setPositiveButton("Got it!", DialogInterface.OnClickListener(function = buttonClicked))
-
-        //Network check from NetworkHandler
-        if (NetworkHandler.isOnline(this)) {
-            //Cache the data
-            println("!!! We Have internet")
-        } else {
-            //Get the cached data
-            println("!!! NO INTERNET")
-        }
 
         //val testObj = CurrentGame("testObj", 10, "Test", true)
         //val testObj2 = CurrentGame("testObj", 2, "Test", true)

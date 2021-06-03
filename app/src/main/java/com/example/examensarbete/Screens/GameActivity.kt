@@ -29,7 +29,6 @@ class GameActivity : AppCompatActivity() {
     private var gameCompleted = false
     private var catToSave = ""
 
-    private var test = MutableLiveData<MutableList<Question>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +45,6 @@ class GameActivity : AppCompatActivity() {
         //Setting the category text to the chosen one from the previous activity
         val userCat = intent.getStringExtra("category").toString()
         categoryText.text = userCat
-
         catToSave = userCat
 
         //TODO göra om poäng här iställer för model
@@ -61,6 +59,7 @@ class GameActivity : AppCompatActivity() {
         }) */
 
 
+        //Looping the list and setting it
         fun setInList(list: List<Question>) {
             //TODO LISTA SOM LOOPAR IGENOM IT LISTA OCH SÄTTER
             for (question in list) {
@@ -93,11 +92,21 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
+
+    private fun navigateEndScreen() {
+        val intent = Intent(this, EndGameScreen::class.java)
+        intent.putExtra("score", playerScore.toString())
+        startActivity(intent)
+    }
+
+    //Navigate to main
     private fun navigateHome() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
 
+
+    //Check the player answer if it it == to the question objects correctAnswer
     private fun checkAnswer(answer: Int) {
         var correct = objQuestionList[questionIndex].correct_answer
         if (answer == correct) {
@@ -110,6 +119,7 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
+    //Increase the playerscore
     private fun increaseScore () {
         playerScore++
         val playerScoreText = findViewById<TextView>(R.id.player_score)
@@ -117,6 +127,7 @@ class GameActivity : AppCompatActivity() {
         viewModel.addScore()
     }
 
+    //Increase the question index, calling ui update and the check function
     private fun loadNextQuestion () {
         gameCompleted()
         questionIndex++
@@ -124,6 +135,7 @@ class GameActivity : AppCompatActivity() {
         println("!!! Next Question")
     }
 
+    //Updates the question text and score
     private fun updateUi() {
         val scoreText = findViewById<TextView>(R.id.player_score)
         var score = 0
@@ -134,13 +146,14 @@ class GameActivity : AppCompatActivity() {
         questionText.text = objQuestionList[questionIndex].text
     }
 
+    //A check if the game is on the 8:th question (Last one) if yes: Saves the game to profile and navigates
     private fun gameCompleted () {
         if (questionIndex == 7) {
                 Thread(Runnable {
                     AddCompletedGame().addFinishedGame(playerScore, catToSave)
                     println("!!! thread ran")
                 }).start()
-                navigateHome() // Navigate to well played screen, tap it to navigate to main? better ui
+                navigateEndScreen()
                 println("!!! GAME COMPLETED")
         }
     }

@@ -41,11 +41,13 @@ class Categories : AppCompatActivity() {
         val category3 = findViewById<Button>(R.id.category3_button)
 
 
+        //Setting button colors
         category1.setBackgroundColor(Color.parseColor("#1cc5dc"))
         category2.setBackgroundColor(Color.parseColor("#1cc5dc"))
         category3.setBackgroundColor(Color.parseColor("#1cc5dc"))
 
 
+        //Setting the values when pressed
         category1.setOnClickListener {
             chosenCat = listCat[0]
             val catUid = categoryUidList[0]
@@ -79,6 +81,7 @@ class Categories : AppCompatActivity() {
     }
 
     private fun getCategories() {
+        //TODO use another class to get the cats!
         db.collection("Categories").get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {

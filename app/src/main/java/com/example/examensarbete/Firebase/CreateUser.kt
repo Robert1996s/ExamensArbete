@@ -11,15 +11,17 @@ class CreateUser {
     lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
 
-    fun userCreate(email: String, password: String, name: String) {
+    fun userCreate(email: String, password: String, name: String): Boolean {
         db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
         if (email == "" || password == "" || name =="") {
+            return false
             println("!!!User NOT created")
         } else {
             auth.createUserWithEmailAndPassword(email, password)
             println("!!!User Created")
             saveUserData(name, email)
+            return true
         }
         println("!!!name and password ${name + email}")
     }
