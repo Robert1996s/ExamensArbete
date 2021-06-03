@@ -11,3 +11,5 @@ DataEncryption = kryptering av sträng
 LruCache = Cachar data
 
 NetWork/NetworkHandler = Check om internet finns
+
+Unit test för email (när man signar up)
